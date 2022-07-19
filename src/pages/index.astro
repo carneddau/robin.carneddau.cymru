@@ -1,0 +1,66 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+---
+
+<Layout title="Robin Kennedy-Reid">
+	<main>
+		<h1><span class="text-gradient">Robin Kennedy-Reid</span></h1>
+		<p>Research Software Engineer at <a href="https://www.hartree.stfc.ac.uk">Hartree Centre, STFC</a></p>
+		<ul role="list" class="link-card-grid">
+			<Card
+				href="https://github.com/rlkennedyreid"
+				title="GitHub"
+				body="Check out my latest projects."
+			/>
+			<Card
+				href="https://www.linkedin.com/in/rlkennedyreid/"
+				title="LinkedIn"
+				body="View my CV or contact me"
+			/>
+		</ul>
+	</main>
+</Layout>
+
+<style>
+	:root {
+		--astro-gradient: linear-gradient(0deg, #3b0f70, #641a80, #8c2981, #b63679, #de4968, #f66f5c, #fe9f6d);
+	}
+
+	h1 {
+		margin: 2rem 0;
+	}
+
+	main {
+		margin: auto;
+		padding: 1em;
+		max-width: 60ch;
+	}
+
+	.text-gradient {
+		background-image: var(--astro-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 100% 200%;
+		background-position-y: 100%;
+		border-radius: 0.4rem;
+		animation: pulse 4s ease-in-out infinite;
+	}
+
+	@keyframes pulse {
+		0%,
+		100% {
+			background-position-y: 0%;
+		}
+		50% {
+			background-position-y: 80%;
+		}
+	}
+
+	.link-card-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+		gap: 1rem;
+		padding: 0;
+	}
+</style>
