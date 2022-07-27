@@ -8,8 +8,22 @@ on:
   # Allows you to run this workflow manually from the Actions tab on GitHub.
   workflow_dispatch:
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
 
     # Allow this job to push changes to your repository
@@ -32,12 +46,24 @@ jobs:
       # Not using npm? Change `npm run build` to `yarn build` or `pnpm run build`
       - name: Build Astro
         run: npm run build
+  
+      - name: Setup Pages
+        uses: actions/configure-pages@v1
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: './dist'
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@068dc23d9710f1ba62e86896f84735d869951305
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          # `./dist` is the default Astro build directory.
-          # If you changed that, update it here too.
-          publish_dir: ./dist
-          cname: robin.carneddau.cymru
+        id: deployment
+        uses: actions/deploy-pages@main
+        
+#       - name: Deploy to GitHub Pages
+#         uses: peaceiris/actions-gh-pages@068dc23d9710f1ba62e86896f84735d869951305
+#         with:
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           # `./dist` is the default Astro build directory.
+#           # If you changed that, update it here too.
+#           publish_dir: ./dist
+#           cname: robin.carneddau.cymru
